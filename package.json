@@ -1,0 +1,29 @@
+{
+  "name": "@spectrum/sp-dropdown",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/dropdown.component.js",
+  "module": "dist/dropdown.component.js",
+  "dependencies": {
+    "@spectrum/sp-base": "git+https://github.com/emexal-company/sp-base.git",
+    "@spectrum/sp-config": "git+https://github.com/emexal-company/sp-config.git",
+    "@spectrum/sp-popover": "git+https://github.com/emexal-company/sp-popover.git",
+    "@spectrum/sp-button": "git+https://github.com/emexal-company/sp-button.git",
+    "@spectrum/sp-icon": "git+https://github.com/emexal-company/sp-icon.git",
+    "@spectrum/sp-menu": "git+https://github.com/emexal-company/sp-menu.git",
+    "@spectrum/sp-dropdownitem": "git+https://github.com/emexal-company/sp-dropdownitem.git",
+    "lit-element": "^2.4.0",
+    "tslib": "^2.0.1"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "engines": {
+    "node": ">=8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Omar BELKHODJA",
+  "license": "Apache-2.0"
+}
