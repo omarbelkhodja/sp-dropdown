@@ -27,9 +27,9 @@ export type NestableMenuElement = MenuElement | { [k: string]: MenuElement };
 
 @customElement('sp-dropdown')
 export class Dropdown extends Base {
-  public static componentStyles = [ Menu.componentStyles, Button.componentStyles, Popover.componentStyles, dropdownStyles ];
+  public static componentStyles = [Menu.componentStyles, ...Button.componentStyles, ...Popover.componentStyles, dropdownStyles];
 
-  @property({ type: String }) displayedItem = "";
+  @property({ type: String }) displayedItem = '';
   @property({ type: Boolean }) open = false;
   @property({ type: Array }) menu: MenuElement[] = [];
   @property({ type: Boolean }) disabled = false;
@@ -38,35 +38,41 @@ export class Dropdown extends Base {
   @property({ type: Boolean }) error = false;
   @property({ type: Boolean }) multilist = false;
   @property({ type: String }) width = false;
-  @query('slot') private slot!: HTMLElement;
+  @query('slot') private myslot!: HTMLElement;
 
   constructor() {
     super();
-    //document.addEventListener('click', this._handleDocumentClick.bind(this));
   }
 
   protected firstUpdated() {
-    let selectable = this.getSteps()
-      .filter((element: any) => element.separator == false)
-      .find((element: any) => element.selected == true)
-    if (selectable) {
-      this.displayedItem = selectable.text;
-    } else {
-      this.displayedItem = this.getSteps()[0].text;
+    this.updateSelected();
+  }
+
+  protected updateSelected() {
+    const items = this.getItems();
+    const selected = items
+      .filter((element: any) => !element.separator)
+      .find((element: any) => element.selected);
+    if (selected) {
+      this.displayedItem = selected.text;
+    } else if (items.length > 0) {
+      this.displayedItem = items[0].text;
+      items[0].selected = true;
     }
   }
 
-  protected getSteps(): DropdownItem[] {
-    return (this.slot as HTMLSlotElement)
+  protected getItems(): DropdownItem[] {
+    return (this.myslot as HTMLSlotElement)
       .assignedNodes({ flatten: true })
       .filter((e: Node) => (e instanceof DropdownItem)) as any as DropdownItem[];
   }
 
-  protected handleSlotChange(e) {
-    let currentElement = e.path.filter((e: Node) => (e instanceof DropdownItem));
-    let selectedItems = [];
-    if (this.slot) {
-      const items = this.getSteps();
+  protected handleSlotClick(e) {
+    const currentElement = e.path.filter((e: Node) => (e instanceof DropdownItem));
+
+    const selectedItems = [];
+    if (this.myslot) {
+      const items = this.getItems();
       if (this.multilist) {
         items.forEach((item: any) => {
           if (item.selected) {
@@ -83,30 +89,25 @@ export class Dropdown extends Base {
           this.displayedItem = currentElement[0].text;
           selectedItems.push(currentElement[0].text);
           items
-            .filter((item: any) => item.text != currentElement[0].text)
+            .filter((item: any) => item.text !== currentElement[0].text)
             .forEach((item: any) => {
-              item.selected = false
-            })
+              item.selected = false;
+            });
         }
       }
     }
-    let changedEvent = new CustomEvent('slectionChanged', {
+    const changedEvent = new CustomEvent('selectionChanged', {
       detail: {
-        selectedItems: selectedItems
+        selectedItems,
       },
       bubbles: true,
-      composed: true
+      composed: true,
     });
     this.dispatchEvent(changedEvent);
   }
 
-  protected _handleDocumentClick(e: any) {
-    if ((!this.open) && e.path.some((el: any) => el === this) && (this != e.path[0])) {
-      this.open = true;
-    }
-    else {
-      this.open = false;
-    }
+  protected handleSlotchange() {
+    this.updateSelected();
   }
 
   protected render() {

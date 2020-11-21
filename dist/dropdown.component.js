@@ -1,3 +1,16 @@
+/**
+    @license
+    Copyright 2020 EMEXAL All Rights Reserved.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 import { __decorate, __metadata } from "tslib";
 import { customElement, property, query } from 'lit-element';
 import { Base } from '@spectrum/sp-base';
@@ -10,7 +23,7 @@ import { DropdownItem } from '@spectrum/sp-dropdownitem';
 let Dropdown = class Dropdown extends Base {
     constructor() {
         super();
-        this.displayedItem = "";
+        this.displayedItem = '';
         this.open = false;
         this.menu = [];
         this.disabled = false;
@@ -19,29 +32,33 @@ let Dropdown = class Dropdown extends Base {
         this.error = false;
         this.multilist = false;
         this.width = false;
-        //document.addEventListener('click', this._handleDocumentClick.bind(this));
     }
     firstUpdated() {
-        let selectable = this.getSteps()
-            .filter((element) => element.separator == false)
-            .find((element) => element.selected == true);
-        if (selectable) {
-            this.displayedItem = selectable.text;
+        this.updateSelected();
+    }
+    updateSelected() {
+        const items = this.getItems();
+        const selected = items
+            .filter((element) => !element.separator)
+            .find((element) => element.selected);
+        if (selected) {
+            this.displayedItem = selected.text;
         }
-        else {
-            this.displayedItem = this.getSteps()[0].text;
+        else if (items.length > 0) {
+            this.displayedItem = items[0].text;
+            items[0].selected = true;
         }
     }
-    getSteps() {
-        return this.slot
+    getItems() {
+        return this.myslot
             .assignedNodes({ flatten: true })
             .filter((e) => (e instanceof DropdownItem));
     }
-    handleSlotChange(e) {
-        let currentElement = e.path.filter((e) => (e instanceof DropdownItem));
-        let selectedItems = [];
-        if (this.slot) {
-            const items = this.getSteps();
+    handleSlotClick(e) {
+        const currentElement = e.path.filter((e) => (e instanceof DropdownItem));
+        const selectedItems = [];
+        if (this.myslot) {
+            const items = this.getItems();
             if (this.multilist) {
                 items.forEach((item) => {
                     if (item.selected) {
@@ -60,35 +77,30 @@ let Dropdown = class Dropdown extends Base {
                     this.displayedItem = currentElement[0].text;
                     selectedItems.push(currentElement[0].text);
                     items
-                        .filter((item) => item.text != currentElement[0].text)
+                        .filter((item) => item.text !== currentElement[0].text)
                         .forEach((item) => {
                         item.selected = false;
                     });
                 }
             }
         }
-        let changedEvent = new CustomEvent('slectionChanged', {
+        const changedEvent = new CustomEvent('selectionChanged', {
             detail: {
-                selectedItems: selectedItems
+                selectedItems,
             },
             bubbles: true,
-            composed: true
+            composed: true,
         });
         this.dispatchEvent(changedEvent);
     }
-    _handleDocumentClick(e) {
-        if ((!this.open) && e.path.some((el) => el === this) && (this != e.path[0])) {
-            this.open = true;
-        }
-        else {
-            this.open = false;
-        }
+    handleSlotchange() {
+        this.updateSelected();
     }
     render() {
         return template.call(this);
     }
 };
-Dropdown.componentStyles = [Menu.componentStyles, Button.componentStyles, Popover.componentStyles, dropdownStyles];
+Dropdown.componentStyles = [Menu.componentStyles, ...Button.componentStyles, ...Popover.componentStyles, dropdownStyles];
 __decorate([
     property({ type: String }),
     __metadata("design:type", Object)
@@ -128,7 +140,7 @@ __decorate([
 __decorate([
     query('slot'),
     __metadata("design:type", HTMLElement)
-], Dropdown.prototype, "slot", void 0);
+], Dropdown.prototype, "myslot", void 0);
 Dropdown = __decorate([
     customElement('sp-dropdown'),
     __metadata("design:paramtypes", [])

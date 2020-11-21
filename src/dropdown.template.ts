@@ -15,14 +15,11 @@
 import { html } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { styleMap } from 'lit-html/directives/style-map.js';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { Dropdown } from './dropdown.component';
-import { Spectrum } from '@spectrum/config/spectrum-config';
 
 import '@spectrum/sp-popover';
 import '@spectrum/sp-button';
 import '@spectrum/sp-icon';
-import { inherit } from 'highlight.js';
 
 export type MenuElement = { id: String, text: String, role: String, disabled: Boolean };
 
@@ -33,14 +30,12 @@ export default function template(this: Dropdown) {
         'is-selected': this.open,
         'spectrum-FieldButton--quiet': this.quiet
     }
+
     var classes2 = {
         'is-disabled': this.disabled,
         'spectrum-Dropdown--quiet': this.quiet
     }
-    var classes3 = {
-        'is-disabled': this.disabled,
-    }
-    
+
     const selectThumbnails: any[] = [];
 
     if (this.thumbnails) {
@@ -71,7 +66,7 @@ export default function template(this: Dropdown) {
             <sp-icon name="ChevronDownMedium" class="spectrum-Dropdown-icon"></sp-icon>
         </button>
         <ul slot="dropdown-content" class="spectrum-Menu" role="listbox" style="${styleMap({ width: Number(this.width)-20 + 'px', overflow: 'inherit'})}">
-            <slot @click="${this.handleSlotChange}"></slot>
+            <slot @click="${this.handleSlotClick}" @slotchange="${this.handleSlotchange}"></slot>
         </ul>
         </sp-popover>
     </div>
