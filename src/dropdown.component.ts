@@ -59,6 +59,7 @@ export class Dropdown extends Base {
       this.displayedItem = items[0].text;
       items[0].selected = true;
     }
+    this.requestUpdate();
   }
 
   protected getItems(): DropdownItem[] {
@@ -69,41 +70,21 @@ export class Dropdown extends Base {
 
   protected handleSlotClick(e) {
     const currentElement = e.path.filter((e: Node) => (e instanceof DropdownItem));
-
-    const selectedItems = [];
-    if (this.myslot) {
-      const items = this.getItems();
-      if (this.multilist) {
-        items.forEach((item: any) => {
-          if (item.selected) {
-            selectedItems.push(item.text)
-          }
-        })
-        if (selectedItems.length > 0) {
-          this.displayedItem = selectedItems[0];
-        } else {
-          this.displayedItem = items[0].text;
-        }
-      } else {
-        if (currentElement[0].selected) {
-          this.displayedItem = currentElement[0].text;
-          selectedItems.push(currentElement[0].text);
-          items
-            .filter((item: any) => item.text !== currentElement[0].text)
-            .forEach((item: any) => {
-              item.selected = false;
-            });
-        }
-      }
+    if (currentElement[0].disabled) {
+      return;
     }
-    const changedEvent = new CustomEvent('selectionChanged', {
-      detail: {
-        selectedItems,
-      },
-      bubbles: true,
-      composed: true,
-    });
-    this.dispatchEvent(changedEvent);
+    this.displayedItem = currentElement[0].text;
+
+    if (this.multilist) {
+      currentElement[0].selected = !currentElement[0].selected;
+    } else {
+      currentElement[0].selected = true;
+      this.getItems()
+        .filter((item: any) => item.text !== currentElement[0].text)
+        .forEach((item: any) => {
+          item.selected = false;
+        });
+    }
   }
 
   protected handleSlotchange() {

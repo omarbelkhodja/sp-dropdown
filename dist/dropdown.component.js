@@ -48,6 +48,7 @@ let Dropdown = class Dropdown extends Base {
             this.displayedItem = items[0].text;
             items[0].selected = true;
         }
+        this.requestUpdate();
     }
     getItems() {
         return this.myslot
@@ -56,42 +57,21 @@ let Dropdown = class Dropdown extends Base {
     }
     handleSlotClick(e) {
         const currentElement = e.path.filter((e) => (e instanceof DropdownItem));
-        const selectedItems = [];
-        if (this.myslot) {
-            const items = this.getItems();
-            if (this.multilist) {
-                items.forEach((item) => {
-                    if (item.selected) {
-                        selectedItems.push(item.text);
-                    }
-                });
-                if (selectedItems.length > 0) {
-                    this.displayedItem = selectedItems[0];
-                }
-                else {
-                    this.displayedItem = items[0].text;
-                }
-            }
-            else {
-                if (currentElement[0].selected) {
-                    this.displayedItem = currentElement[0].text;
-                    selectedItems.push(currentElement[0].text);
-                    items
-                        .filter((item) => item.text !== currentElement[0].text)
-                        .forEach((item) => {
-                        item.selected = false;
-                    });
-                }
-            }
+        if (currentElement[0].disabled) {
+            return;
         }
-        const changedEvent = new CustomEvent('selectionChanged', {
-            detail: {
-                selectedItems,
-            },
-            bubbles: true,
-            composed: true,
-        });
-        this.dispatchEvent(changedEvent);
+        this.displayedItem = currentElement[0].text;
+        if (this.multilist) {
+            currentElement[0].selected = !currentElement[0].selected;
+        }
+        else {
+            currentElement[0].selected = true;
+            this.getItems()
+                .filter((item) => item.text !== currentElement[0].text)
+                .forEach((item) => {
+                item.selected = false;
+            });
+        }
     }
     handleSlotchange() {
         this.updateSelected();
