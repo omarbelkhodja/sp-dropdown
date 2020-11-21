@@ -34,9 +34,8 @@ export declare class Dropdown extends Base {
     multilist: boolean;
     width: boolean;
     private myslot;
-    constructor();
+    updateSelected(): void;
     protected firstUpdated(): void;
-    protected updateSelected(): void;
     protected getItems(): DropdownItem[];
     protected handleSlotClick(e: any): void;
     protected handleSlotchange(): void;

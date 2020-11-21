@@ -40,15 +40,7 @@ export class Dropdown extends Base {
   @property({ type: String }) width = false;
   @query('slot') private myslot!: HTMLElement;
 
-  constructor() {
-    super();
-  }
-
-  protected firstUpdated() {
-    this.updateSelected();
-  }
-
-  protected updateSelected() {
+  public updateSelected() {
     const items = this.getItems();
     const selected = items
       .filter((element: any) => !element.separator)
@@ -60,6 +52,10 @@ export class Dropdown extends Base {
       items[0].selected = true;
     }
     this.requestUpdate();
+  }
+
+  protected firstUpdated() {
+    this.updateSelected();
   }
 
   protected getItems(): DropdownItem[] {

@@ -22,7 +22,7 @@ import { Popover } from '@spectrum/sp-popover';
 import { DropdownItem } from '@spectrum/sp-dropdownitem';
 let Dropdown = class Dropdown extends Base {
     constructor() {
-        super();
+        super(...arguments);
         this.displayedItem = '';
         this.open = false;
         this.menu = [];
@@ -32,9 +32,6 @@ let Dropdown = class Dropdown extends Base {
         this.error = false;
         this.multilist = false;
         this.width = false;
-    }
-    firstUpdated() {
-        this.updateSelected();
     }
     updateSelected() {
         const items = this.getItems();
@@ -49,6 +46,9 @@ let Dropdown = class Dropdown extends Base {
             items[0].selected = true;
         }
         this.requestUpdate();
+    }
+    firstUpdated() {
+        this.updateSelected();
     }
     getItems() {
         return this.myslot
@@ -122,8 +122,7 @@ __decorate([
     __metadata("design:type", HTMLElement)
 ], Dropdown.prototype, "myslot", void 0);
 Dropdown = __decorate([
-    customElement('sp-dropdown'),
-    __metadata("design:paramtypes", [])
+    customElement('sp-dropdown')
 ], Dropdown);
 export { Dropdown };
 //# sourceMappingURL=dropdown.component.js.map
