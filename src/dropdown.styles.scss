@@ -403,3 +403,39 @@
 //     box-shadow: none;
 //   }
   
+
+.spectrum-Dropdown:not([firstofgroup]) {
+    margin-left: calc(-1 * var(--spectrum-textfield-border-size, var(--spectrum-alias-border-size-thin)));
+}
+
+button:not([firstofgroup]) {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;    
+}
+
+button:not([lastofgroup]) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+:host {
+    position: relative;
+}
+
+:host(:hover) {
+    z-index: 999;
+}
+
+input {
+    border-radius: 0px;
+}
+
+input[firstofgroup] {
+    border-bottom-left-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));
+    border-top-left-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));    
+}
+
+input[lastofgroup] {
+    border-bottom-right-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));
+    border-top-right-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));
+}

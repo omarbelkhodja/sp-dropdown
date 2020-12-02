@@ -20,83 +20,36 @@ import '@spectrum/sp-dropdown';
 import '@spectrum/sp-button';
 
 import '@spectrum/sp-container';
+import '@spectrum/sp-textfield';
 
 
 export default function template(this: DemoDropdown) {
   return html`
-    <sp-container>  
-      <sp-rule medium label="Dropdown - Standard"></sp-rule>
-      <sp-demo width="320">
-        <pre>
-        <sp-dropdown width="300">
+      <div>
+      <sp-dropdown width="100">
           <sp-dropdownitem text="Brazil"></sp-dropdownitem>
           <sp-dropdownitem text="Peru"></sp-dropdownitem>
           <sp-dropdownitem text="Iceland"></sp-dropdownitem>
-          <sp-dropdownitem separator></sp-dropdownitem>
-          <sp-dropdownitem text="Cameroon" disabled></sp-dropdownitem>
         </sp-dropdown>
-        </pre>
-      </sp-demo>
-      <sp-rule medium label="Dropdown - Error"></sp-rule>
-      <sp-demo width="320">
-        <pre>
-        <sp-dropdown width="300" error>
+      </div>
+      <sp-group style="display: flex;">
+        <sp-dropdown width="100">
           <sp-dropdownitem text="Brazil"></sp-dropdownitem>
           <sp-dropdownitem text="Peru"></sp-dropdownitem>
           <sp-dropdownitem text="Iceland"></sp-dropdownitem>
-          <sp-dropdownitem separator></sp-dropdownitem>
-          <sp-dropdownitem text="Cameroon" disabled></sp-dropdownitem>
         </sp-dropdown>
-        </pre>
-      </sp-demo>
-      <sp-rule medium label="Dropdown - Disabled"></sp-rule>
-      <sp-demo width="320">
-        <pre>
-        <sp-dropdown width="300" disabled>
+        <sp-textfield>
+        </sp-textfield>
+        <sp-dropdown width="100">
           <sp-dropdownitem text="Brazil"></sp-dropdownitem>
           <sp-dropdownitem text="Peru"></sp-dropdownitem>
           <sp-dropdownitem text="Iceland"></sp-dropdownitem>
-          <sp-dropdownitem separator></sp-dropdownitem>
-          <sp-dropdownitem text="Cameroon" disabled></sp-dropdownitem>
-        </sp-dropdown>
-        </pre>
-      </sp-demo>
-      <sp-rule medium label="Dropdown - Multilist"></sp-rule>
-      <sp-demo width="320">
-        <pre>
-        <sp-dropdown width="300" multilist>
+        </sp-dropdown>        
+        <sp-dropdown width="100">
           <sp-dropdownitem text="Brazil"></sp-dropdownitem>
           <sp-dropdownitem text="Peru"></sp-dropdownitem>
           <sp-dropdownitem text="Iceland"></sp-dropdownitem>
-          <sp-dropdownitem separator></sp-dropdownitem>
-          <sp-dropdownitem text="Cameroon" disabled></sp-dropdownitem>
         </sp-dropdown>
-        </pre>
-      </sp-demo>
-      <sp-rule medium label="Dropdown - Thumbnails"></sp-rule>
-      <sp-demo width="320">
-        <pre>
-        <sp-dropdown width="300" thumbnails>
-          <sp-dropdownitem text="Brazil" thumbnails></sp-dropdownitem>
-          <sp-dropdownitem text="Peru" thumbnails></sp-dropdownitem>
-          <sp-dropdownitem text="Iceland" thumbnails></sp-dropdownitem>
-          <sp-dropdownitem separator></sp-dropdownitem>
-          <sp-dropdownitem text="Cameroon" disabled thumbnails></sp-dropdownitem>
-        </sp-dropdown>
-        </pre>
-      </sp-demo>
-      <sp-rule medium label="Dropdown - Quiet"></sp-rule>
-      <sp-demo width="320">
-        <pre>
-        <sp-dropdown width="150" quiet>
-          <sp-dropdownitem text="Brazil"></sp-dropdownitem>
-          <sp-dropdownitem text="Peru"></sp-dropdownitem>
-          <sp-dropdownitem text="Iceland"></sp-dropdownitem>
-          <sp-dropdownitem separator></sp-dropdownitem>
-          <sp-dropdownitem text="Cameroon" disabled></sp-dropdownitem>
-        </sp-dropdown>
-        </pre>
-      </sp-demo>
-    </sp-container>
+      </sp-group>
   `;
 }

@@ -32,6 +32,8 @@ let Dropdown = class Dropdown extends Base {
         this.error = false;
         this.multilist = false;
         this.width = false;
+        this.firstOfGroup = true;
+        this.lastOfGroup = true;
     }
     updateSelected() {
         const items = this.getItems();
@@ -46,6 +48,17 @@ let Dropdown = class Dropdown extends Base {
             items[0].selected = true;
         }
         this.requestUpdate();
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        if (this.parentElement.nodeName === 'SP-GROUP') {
+            console.log(Array.from(this.parentElement.children).findIndex((child) => child === this));
+            const myIndex = Array.from(this.parentElement.children).findIndex((child) => child === this);
+            const lastIndex = Array.from(this.parentElement.children).length - 1;
+            const firstIndex = 0;
+            this.firstOfGroup = (myIndex === firstIndex);
+            this.lastOfGroup = (myIndex === lastIndex);
+        }
     }
     firstUpdated() {
         this.updateSelected();
@@ -121,6 +134,14 @@ __decorate([
     query('slot'),
     __metadata("design:type", HTMLElement)
 ], Dropdown.prototype, "myslot", void 0);
+__decorate([
+    property({ type: Boolean }),
+    __metadata("design:type", Object)
+], Dropdown.prototype, "firstOfGroup", void 0);
+__decorate([
+    property({ type: Boolean }),
+    __metadata("design:type", Object)
+], Dropdown.prototype, "lastOfGroup", void 0);
 Dropdown = __decorate([
     customElement('sp-dropdown')
 ], Dropdown);
