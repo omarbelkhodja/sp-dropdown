@@ -420,11 +420,6 @@ button:not([lastofgroup]) {
 
 :host {
     position: relative;
-    z-index: -1;
-}
-
-:host(:hover) {
-    z-index: auto;
 }
 
 input {
