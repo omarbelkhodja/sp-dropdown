@@ -61,8 +61,6 @@ export class Dropdown extends Base {
     super.connectedCallback();
 
     if (this.parentElement.nodeName === 'SP-GROUP') {
-      console.log(Array.from(this.parentElement.children).findIndex((child) => child === this));
-
       const myIndex = Array.from(this.parentElement.children).findIndex((child) => child === this);
       const lastIndex = Array.from(this.parentElement.children).length - 1;
       const firstIndex = 0;
