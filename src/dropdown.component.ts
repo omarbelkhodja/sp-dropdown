@@ -40,9 +40,6 @@ export class Dropdown extends Base {
   @property({ type: String }) width = false;
   @query('slot') private myslot!: HTMLElement;
 
-  @property({ type: Boolean }) firstOfGroup = true;
-  @property({ type: Boolean }) lastOfGroup = true;
-
   public updateSelected() {
     const items = this.getItems();
     const selected = items
@@ -55,19 +52,6 @@ export class Dropdown extends Base {
       items[0].selected = true;
     }
     this.requestUpdate();
-  }
-
-  public connectedCallback() {
-    super.connectedCallback();
-
-    if (this.parentElement.nodeName === 'SP-GROUP') {
-      const myIndex = Array.from(this.parentElement.children).findIndex((child) => child === this);
-      const lastIndex = Array.from(this.parentElement.children).length - 1;
-      const firstIndex = 0;
-
-      this.firstOfGroup = (myIndex === firstIndex);
-      this.lastOfGroup = (myIndex === lastIndex);
-    }
   }
 
   protected firstUpdated() {

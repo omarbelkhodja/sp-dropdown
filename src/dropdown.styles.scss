@@ -402,18 +402,16 @@
 //   .spectrum-FieldButton--quiet.is-disabled.focus-ring {
 //     box-shadow: none;
 //   }
-  
-
-.spectrum-Dropdown:not([firstofgroup]) {
+:host-context(sp-group):host(:not(:first-child)) .spectrum-Dropdown {
     margin-left: calc(-1 * var(--spectrum-textfield-border-size, var(--spectrum-alias-border-size-thin)));
 }
 
-button:not([firstofgroup]) {
+:host-context(sp-group):host(:not(:first-child)) button {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;    
 }
 
-button:not([lastofgroup]) {
+:host-context(sp-group):host(:not(:last-child)) button {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 }
@@ -426,12 +424,12 @@ input {
     border-radius: 0px;
 }
 
-input[firstofgroup] {
+:host-context(sp-group):host(:not(:first-child)) input {
     border-bottom-left-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));
     border-top-left-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));    
 }
 
-input[lastofgroup] {
+:host-context(sp-group):host(:not(:last-child)) input {
     border-bottom-right-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));
     border-top-right-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));
 }

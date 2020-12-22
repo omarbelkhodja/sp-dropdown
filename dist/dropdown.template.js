@@ -40,11 +40,9 @@ export default function template() {
         `);
     }
     return html `
-    <div ?firstofgroup="${this.firstOfGroup}" class='spectrum-Dropdown ${classMap(classes2)}' style="${styleMap({ width: this.width + 'px', minWidth: this.width + 'px' })}">
+    <div class='spectrum-Dropdown ${classMap(classes2)}' style="${styleMap({ width: this.width + 'px', minWidth: this.width + 'px' })}">
         <sp-popover style="${styleMap({ width: this.width + 'px', minWidth: this.width + 'px' })}" ?disabled=${this.disabled}>
         <button
-            ?firstofgroup="${this.firstOfGroup}"
-            ?lastofgroup="${this.lastOfGroup}"
             slot="dropdown-trigger"
             ?disabled="${this.disabled}"
             class="spectrum-FieldButton spectrum-Dropdown-trigger ${classMap(classes1)}" 
